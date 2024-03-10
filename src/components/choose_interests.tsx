@@ -1,23 +1,16 @@
 "use client";
 
-import React, { useState, useEffect, useCallback } from 'react'
-import { redirect } from 'next/navigation'
+import React, { useState, useEffect } from 'react';
 import { useRouter } from 'next/navigation';
 import { serverAction } from "@/app/actions";
-import { changeFirstLogin } from '@/app/page';
-
-const interests = ['Technology', 'Books', 'Gaming', 'Computers', 'Docking', 'Ports']
+const interests = ['Technology', 'Books', 'Gaming', 'Computers', 'Docking', 'Ports'];
 
 function ChooseInterests() {
 
   const router = useRouter();
   const [selectedInterests, setSelectedInterests] = useState<string[]>([]);
 
-  const isSelected = (interest : string) => {
-    console.log(selectedInterests.includes(interest));
-    return selectedInterests.includes(interest);
-    
-  };
+  const isSelected = (interest : string) => selectedInterests.includes(interest);
 
   const handleInterestToggle = (interest : string) => {
     console.log('handleInterestToggle', interest);
@@ -34,16 +27,9 @@ function ChooseInterests() {
   const handleClick = () => {
     console.log('button clicked');
     serverAction(selectedInterests);
-    changeFirstLogin();
-    console.log('button clicked 2');
+    console.log('server action dispatched');
     router.refresh();
-    // redirect('/');
-    // console.log('button clicked 3');
   }
-
-  useEffect(() => {
-    console.log('useEffect');
-  })
 
   return (
     <div className={`w-full p-2 hover:border-r-4 hover:border-b-2 ${selectedInterests.length >=3 ? 'border-green-500': 'border-red-500'} `}>
